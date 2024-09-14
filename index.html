@@ -18,15 +18,27 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffffff;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #f39c12, #8e44ad, #3498db, #e74c3c, #27ae60);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            overflow: hidden; /* Prevents layout from breaking */
+            color: white;
+        }
+
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .cookie-container {
             position: relative;
             display: inline-block;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .cookie {
@@ -43,8 +55,10 @@
         }
 
         .score {
-            font-size: 24px;
+            font-size: 30px;
             margin-top: 20px;
+            font-weight: bold;
+            color: white;
         }
 
         .upgrade-container {
@@ -59,11 +73,27 @@
             border: none;
             cursor: pointer;
             font-size: 18px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            background-size: 400% 400%;
+            animation: rainbowButton 3s linear infinite;
         }
 
         .upgrade:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
+            animation: none;
+        }
+
+        .upgrade:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes rainbowButton {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Confetti styling */
@@ -96,8 +126,6 @@
         function clickCookie() {
             score++;
             document.getElementById('score').textContent = score;
-            // Temporarily commented out confetti for testing
-            // generateConfetti();
             animateClick();
             checkUpgradeAvailability();
         }
@@ -108,31 +136,6 @@
             setTimeout(() => {
                 cookie.classList.remove('clicked');
             }, 100);  // Small delay to make the "click" animation visible
-        }
-
-        function generateConfetti() {
-            for (let i = 0; i < 100; i++) {
-                let confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = getRandomColor();
-                confetti.style.width = confetti.style.height = Math.random() * 10 + 'px';
-                document.body.appendChild(confetti);
-
-                setTimeout(() => {
-                    confetti.remove();
-                }, 1000);
-            }
-        }
-
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
         }
 
         function buyUpgrade(clicks, cost) {

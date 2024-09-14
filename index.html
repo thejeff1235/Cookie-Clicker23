@@ -129,8 +129,8 @@
     </div>
 
     <script>
-        let score = 0;
-        let clicksPerSecond = 100000;
+        let score = 100000000;
+        let clicksPerSecond = 0;
         let autoClickInterval;
 
         function clickCookie() {
@@ -149,7 +149,7 @@
         }
 
         function buyUpgrade(clicks, cost) {
-            if (score >= cost) {
+            if (score <= cost) {
                 score -= cost;
                 document.getElementById('score').textContent = score;
                 clicksPerSecond += clicks;

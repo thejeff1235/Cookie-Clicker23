@@ -61,6 +61,12 @@
             color: white;
         }
 
+        .cps {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #f1c40f;
+        }
+
         .upgrade-container {
             margin-top: 20px;
         }
@@ -111,10 +117,13 @@
     <div class="cookie-container">
         <div class="cookie" id="cookie" onclick="clickCookie()"></div>
         <div class="score">Score: <span id="score">0</span></div>
+        <div class="cps">CPS: <span id="cps">0</span></div>
         <div class="upgrade-container">
-            <button class="upgrade" id="upgradeButton1" onclick="buyUpgrade(1, 100)">Buy Auto Click (1 click/sec) - Cost: 100</button>
-            <button class="upgrade" id="upgradeButton2" onclick="buyUpgrade(2, 500)">Buy Faster Click (2 clicks/sec) - Cost: 500</button>
-            <button class="upgrade" id="upgradeButton3" onclick="buyUpgrade(5, 1000)">Buy Super Click (5 clicks/sec) - Cost: 1000</button>
+            <button class="upgrade" id="upgradeButton1" onclick="buyUpgrade(2, 100)">Buy Auto Clicker (1 click/sec) - Cost: 100</button>
+            <button class="upgrade" id="upgradeButton2" onclick="buyUpgrade(7, 500)">Buy Faster Auto Clicker (7 clicks/sec) - Cost: 500</button>
+            <button class="upgrade" id="upgradeButton3" onclick="buyUpgrade(15, 1000)">Buy Super Auto Clicker (10 clicks/sec) - Cost: 1000</button>
+            <button class="upgrade" id="upgradeButton4" onclick="buyUpgrade(30, 1750)">Buy Mega Clicker (30 clicks/sec) - Cost: 1750</button>
+            <button class="upgrade" id="upgradeButton5" onclick="buyUpgrade(200, 7000)">Buy Ultra Click (30 clicks/sec) - Cost: 7000</button>
         </div>
     </div>
 
@@ -143,6 +152,7 @@
                 score -= cost;
                 document.getElementById('score').textContent = score;
                 clicksPerSecond += clicks;
+                updateCPSDisplay();  // Update CPS display when upgrading
                 if (!autoClickInterval) {
                     startAutoClicker();
                 }
@@ -158,10 +168,16 @@
             }, 1000);
         }
 
+        function updateCPSDisplay() {
+            document.getElementById('cps').textContent = clicksPerSecond;
+        }
+
         function checkUpgradeAvailability() {
             document.getElementById('upgradeButton1').disabled = score < 100;
             document.getElementById('upgradeButton2').disabled = score < 500;
             document.getElementById('upgradeButton3').disabled = score < 1000;
+            document.getElementById('upgradeButton4').disabled = score < 1750;
+            document.getElementById('upgradeButton5').disabled = score < 7000;
         }
     </script>
 </body>

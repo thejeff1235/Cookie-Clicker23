@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .cookie-container {
+            position: relative;
+            display: inline-block;
+        }
+        .cookie {
+            width: 150px;
+            height: 150px;
+            background: url('images.jpeg') no-repeat center center;
+            background-size: cover;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        .cookie.clicked {
+            transform: scale(0.9);
+        }
+        .score {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .upgrade-container {
+            margin-top: 20px;
+        }
+        .upgrade {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .upgrade:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="cookie-container">
+        <div class="cookie" id="cookie" onclick="clickCookie()"></div>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="upgrade-container">
+            <button class="upgrade" id="upgradeButton1" onclick="buyUpgrade(1, 100)">Buy Auto Click (1 click/sec) - Cost: 100</button>
+            <button class="upgrade" id="upgradeButton2" onclick="buyUpgrade(2, 500)">Buy Faster Click (2 clicks/sec) - Cost: 500</button>
+            <button class="upgrade" id="upgradeButton3" onclick="buyUpgrade(5, 1000)">Buy Super Click (5 clicks/sec) - Cost: 1000</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let clicksPerSecond = 0;
+        let autoClickInterval;
+
+        function clickCookie() {
+            score++;
+            document.getElementById('score').textContent = score;
+            generateConfetti();
+            animateClick();
+            checkUpgradeAvailability();
+        }
+
+        function animateClick() {
+            const cookie = document.getElementById('cookie');
+            cookie.classList.add('clicked');
+            setTimeout(() => {
+                cookie.classList.remove('clicked');
+            }, 100);  // Small delay to make the "click" animation visible
+        }
+
+        function generateConfetti() {
+            for (let i = 0; i < 100; i++) {
+                let confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.width = confetti.style.height = Math.random() * 10 + 'px';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 1000);
+            }
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function buyUpgrade(clicks, cost) {
+            if (score >= cost) {
+                score -= cost;
+                document.getElementById('score').textContent = score;
+                clicksPerSecond += clicks;
+                if (!autoClickInterval) {
+                    startAutoClicker();
+                }
+                checkUpgradeAvailability();
+            }
+        }
+
+        function startAutoClicker() {
+            autoClickInterval = setInterval(() => {
+                for (let i = 0; i < clicksPerSecond; i++) {
+                    clickCookie();
+                }
+            }, 1000);
+        }
+
+        function checkUpgradeAvailability() {
+            document.getElementById('upgradeButton1').disabled = score < 100;
+            document.getElementById('upgradeButton2').disabled = score < 500;
+            document.getElementById('upgradeButton3').disabled = score < 1000;
+        }
+    </script>
+</body>
+</html>

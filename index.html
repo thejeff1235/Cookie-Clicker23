@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookie Clicker Game</title>
     <style>
+        /* Basic CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
             justify-content: center;
@@ -14,11 +21,14 @@
             background-color: #ffffff;
             font-family: Arial, sans-serif;
             text-align: center;
+            overflow: hidden; /* Prevents layout from breaking */
         }
+
         .cookie-container {
             position: relative;
             display: inline-block;
         }
+
         .cookie {
             width: 150px;
             height: 150px;
@@ -27,16 +37,20 @@
             cursor: pointer;
             transition: transform 0.1s ease;
         }
+
         .cookie.clicked {
             transform: scale(0.9);
         }
+
         .score {
             font-size: 24px;
             margin-top: 20px;
         }
+
         .upgrade-container {
             margin-top: 20px;
         }
+
         .upgrade {
             margin: 5px;
             padding: 10px 20px;
@@ -46,9 +60,20 @@
             cursor: pointer;
             font-size: 18px;
         }
+
         .upgrade:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
+        }
+
+        /* Confetti styling */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0;
+            border-radius: 50%;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -71,7 +96,8 @@
         function clickCookie() {
             score++;
             document.getElementById('score').textContent = score;
-            generateConfetti();
+            // Temporarily commented out confetti for testing
+            // generateConfetti();
             animateClick();
             checkUpgradeAvailability();
         }

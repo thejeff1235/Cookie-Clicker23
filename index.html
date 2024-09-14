@@ -135,7 +135,7 @@
 
         function clickCookie() {
             score++;
-            document.getElementById('score').textContent = score + 10456465;
+            document.getElementById('score').textContent = score;
             animateClick();
             checkUpgradeAvailability();
         }
@@ -179,7 +179,7 @@
             document.getElementById('upgradeButton3').disabled = score < 1000;
             document.getElementById('upgradeButton4').disabled = score < 1750;
             document.getElementById('upgradeButton5').disabled = score < 7000;
-            document.getElementById('upgradeButton6').disabled = score < 1000000;
+            document.getElementById('upgradeButton6').disabled = score < 1;
         }
     </script>
 </body>
